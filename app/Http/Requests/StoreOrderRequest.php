@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Resources\BookResource;
+use App\Models\Book;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreOrderRequest extends FormRequest
@@ -11,7 +13,7 @@ class StoreOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,30 @@ class StoreOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "client_id" =>'required|numeric',
+            'books' => 'required',
+            'books.*.book_id' =>[
+                'required',
+                'numeric',
+                function($attribute, $value,$fail)
+                {
+                    $book = Book::find($value);
+                    if(!$book)
+                    {
+                        $fail('Book not found in the library');
+                    }else{
+                        if($book->quantity === 0)
+                        {
+                            $fail('there is no such book left in the library for this '. $book->id);
+                        }
+                    }
+                }
+            ],
+            'books.*.to' => [
+                'required',
+                'date'
+            ],
+            'status_id' =>'required|numeric'
         ];
     }
 }

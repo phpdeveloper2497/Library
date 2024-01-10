@@ -12,9 +12,11 @@ class Category extends Model
 {
     use HasFactory,HasTranslations,SoftDeletes;
 
-    protected $guarded = [];
+    protected $fillable = ["name"];
 
-    public function products():HasMany
+    public $translatable = ["name"];
+
+    public function books():HasMany
     {
         return $this->HasMany(Category::class);
     }

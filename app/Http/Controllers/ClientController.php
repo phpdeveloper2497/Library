@@ -2,25 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Models\Client;
+use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\UpdateClientRequest;
 
-class UserController extends Controller
+class ClientController extends Controller
 {
-
-
-//    public function __construct()
-//    {
-//        return $this->middleware('auth:sanctum')->except($this->index(),$this->show());
-//    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-         $user = User::all();
-        return $this->response($user);
+       $clients = Client::all();
+       return $this->response($clients);
     }
 
     /**
@@ -34,7 +28,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreClientRequest $request)
     {
         //
     }
@@ -42,7 +36,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(Client $client)
     {
         //
     }
@@ -50,7 +44,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(Client $client)
     {
         //
     }
@@ -58,7 +52,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateClientRequest $request, Client $client)
     {
         //
     }
@@ -66,7 +60,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(Client $client)
     {
         //
     }

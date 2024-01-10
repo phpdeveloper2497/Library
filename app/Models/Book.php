@@ -4,17 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Translatable\HasTranslations;
 
-class Product extends Model
+class Book extends Model
 {
     use HasFactory, HasTranslations, SoftDeletes;
 
-    protected $fillable = ['name','author'];
+//    protected $primaryKey = 'order_id';
+    protected $guarded = [];
+//    protected $fillable = ['book_id','name','author','quantity'];
 
-    public $tranlatable = ['name', 'author'];
+    public $translatable = ['name', 'author'];
 
 //    protected $casts = [];
 
@@ -23,9 +26,15 @@ class Product extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function categories():belongsToMany
+    public function category():belongsTo
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsTo(Category::class);
     }
+
+    public function orders(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
+    }
+
 
 }
