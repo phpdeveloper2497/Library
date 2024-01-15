@@ -31,7 +31,7 @@ class StatusSeeder extends Seeder
                 'ru' => 'читател получил книги',
                 'uz' => 'o\'quvchi kitoblarni oldi',
             ],
-            'for' =>'order',
+            'for' =>'booking',
             'code' => 'take'
 
         ]);
@@ -42,7 +42,7 @@ class StatusSeeder extends Seeder
                 'ru' => 'читател вернул книги',
                 'uz' => 'o\'quvchi kitoblarni qaytardi',
             ],
-            'for' =>'order',
+            'for' =>'booking',
             'code' => 'closed'
         ]);
 
@@ -52,7 +52,7 @@ class StatusSeeder extends Seeder
                 'ru' => 'читател не вернул книги',
                 'uz' => 'o\'quvchida qaytarilmagan kitoblar bor',
             ],
-            'for' =>'order',
+            'for' =>'booking',
             'code' => 'didn\'t return',
         ]);
     }

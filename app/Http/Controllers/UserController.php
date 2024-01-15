@@ -2,24 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
 
 
-//    public function __construct()
-//    {
-//        return $this->middleware('auth:sanctum')->except($this->index(),$this->show());
-//    }
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+//        $this->authorizeResource(User::class, 'user');
+
+
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-         $user = User::all();
+//        dd($user);
+        $user = User::all();
         return $this->response($user);
     }
 
@@ -36,7 +43,10 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        //
+        Gate::authorize('user:create');
+
+        $user = User::create($request->toArray());
+        return $this->success('user created', new UserResource($user));
     }
 
     /**
@@ -68,6 +78,27 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        Gate::authorize('user:delete');
+        $user/*->find($id)*/->delete();
+        return $this->success('user deleted');
+    }
+
+    public function restore(string $id)
+    {
+        Gate::authorize('user:restore');
+
+     User::withTrashed()->where('id', $id)->restore();
+        return $this->success("id = $id user restored");
+    }
+
+    public function forceDelete(string $id)
+    {
+       if ($id !== null)
+       {
+           $forceDelete = User::withTrashed()->where('id', $id)->get();
+//        dd($forceDelete);
+           $forceDelete->forceDelete();
+           return $this->success("id = $id user forceDeleted");
+       }
     }
 }

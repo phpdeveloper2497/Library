@@ -10,9 +10,11 @@ class UserPolicy
     /**
      * Determine whether the user can view any models.
      */
+
+
     public function viewAny(User $user): bool
     {
-        //
+        return $user->hasRole('admin') || $user->hasPermissionTo('user:viewAny');
     }
 
     /**
@@ -44,7 +46,10 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        //
+//        if ($user->hasRole('admin'))
+//        {
+//        return $model->delete();
+//        }
     }
 
     /**
@@ -52,7 +57,11 @@ class UserPolicy
      */
     public function restore(User $user, User $model): bool
     {
-        //
+//        if ($user->hasRole('admin'))
+//        {
+//            return $model->delete();
+//        User::withTrashed()->find($user->id)->restore();
+//        }
     }
 
     /**

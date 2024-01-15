@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('full_name');
             $table->unsignedBigInteger('library_card_id');
+            $table->string('phone_number')->unique();
             $table->timestamps();
         });
     }

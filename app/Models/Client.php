@@ -18,8 +18,8 @@ class Client extends Model
 //        return $this->middleware("auth:sanctum");
 //    }
 
-    public function orders(): HasMany
+    public function bookings(): HasMany
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Booking::class);
     }
 }

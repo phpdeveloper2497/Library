@@ -6,7 +6,7 @@ use App\Http\Resources\BookResource;
 use App\Models\Book;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreOrderRequest extends FormRequest
+class StoreBookingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

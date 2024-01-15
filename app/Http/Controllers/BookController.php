@@ -11,19 +11,32 @@ class BookController extends Controller
 {
     public function __construct()
     {
-        return $this->middleware('auth:sanctum');
+         $this->middleware('auth:sanctum');
+        $this->authorizeResource(Book::class, 'book');
     }
 
     public function index()
     {
+        if (auth()->user()->hasPermissionTo('book:viewAny'))
+        {
         return $this->response(BookResource::collection(Book::all()));
+        }
     }
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreBookRequest $request)
     {
-        //
+        if($request->user()->hasPermissionTo('book:create'))
+        {
+        $book = Book::create([
+            'category_id' => $request->category_id,
+            'name' =>$request->name,
+            'author' =>$request->author,
+            'quantity' =>$request->quantity
+        ]);
+        }
+        return $this->success('Book created successfully', $book);
     }
 
     /**
@@ -31,8 +44,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-//        $book = Book::find(new BookResource());
-       return $this->response(new BookResource($book));
+        return $this->response(new BookResource($book));
     }
 
     /**
@@ -48,6 +60,6 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+
     }
 }

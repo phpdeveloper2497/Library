@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Order extends Model
+class Booking extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -31,6 +31,5 @@ class Order extends Model
     {
         return $this->hasOne(Book::class);
     }
-
 
 }

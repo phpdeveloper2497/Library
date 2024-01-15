@@ -13,9 +13,7 @@ class Book extends Model
 {
     use HasFactory, HasTranslations, SoftDeletes;
 
-//    protected $primaryKey = 'order_id';
-    protected $guarded = [];
-//    protected $fillable = ['book_id','name','author','quantity'];
+    protected $fillable = ['category_id','name','author','quantity'];
 
     public $translatable = ['name', 'author'];
 
@@ -31,9 +29,9 @@ class Book extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function orders(): BelongsTo
+    public function bookings(): BelongsTo
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(Booking::class);
     }
 
 
