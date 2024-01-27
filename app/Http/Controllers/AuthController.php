@@ -39,8 +39,8 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request)
     {
-//       $password =  Hash::make($request->password);
-        $user = User::create([
+
+    $user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
@@ -48,6 +48,16 @@ class AuthController extends Controller
             'phone' => $request->phone,
         ]);
         $user->assignRole('librarian');
+
+        if ($request->hasFile('photo'))
+        {
+            $path = $request->file('photo')->store('users/'.$user->id,'public');
+            $user->photo()->create([
+                'full_name' => $request->file('photo')->getClientOriginalName(),
+                'path'=> $path,
+            ]);
+
+        }
         auth()->login($user);
 
         $token = $user->createToken($request->email)->plainTextToken;

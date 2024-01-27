@@ -14,18 +14,15 @@ class StoreBookRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
+
     public function rules(): array
     {
         return [
             'category_id' =>'required',
             'name' =>'required|string|max:255',
             'author' =>'required|string|max:255',
-            'quantity' =>'required'
+            'quantity' =>'required',
+            'photo' =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:512'
         ];
     }
 }

@@ -5,9 +5,13 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 use App\Models\Book;
 use App\Models\Booking;
+use App\Models\Category;
+use App\Models\Client;
 use App\Models\User;
 use App\Policies\BookPolicy;
 use App\Policies\BookingPolicy;
+use App\Policies\CategoryPolicy;
+use App\Policies\ClientPolicy;
 use App\Policies\PermissionPolicy;
 use App\Policies\RolePolicy;
 use App\Policies\UserPolicy;
@@ -29,6 +33,8 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         Booking::class => BookingPolicy::class,
         Book::class => BookPolicy::class,
+        Client::class => ClientPolicy::class,
+        Category::class => CategoryPolicy::class,
 
     ];
 

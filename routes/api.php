@@ -21,7 +21,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/users/{user}/restore', [UserController::class, 'restore'])->middleware('auth:sanctum');
 Route::get('/users/{user}/forceDelete', [UserController::class, 'forceDelete'])->middleware('auth:sanctum');
+Route::post('/users/{user}/updatePhoto', [UserController::class, 'updatePhoto'])->middleware('auth:sanctum');
 Route::get('/bookings/data-should', [BookingController::class, 'booksReturnedToday'])->middleware('auth:sanctum');
+//Route::post('/books/{book}/updatePhoto', [BookController::class, 'updatePhoto'])->middleware('auth:sanctum');
+//Route::post('/clients/{client}/updatePhoto', [ClientController::class, 'updatePhoto'])->middleware('auth:sanctum');
+
 
 
 Route::resources([

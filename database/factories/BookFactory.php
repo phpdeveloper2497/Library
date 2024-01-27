@@ -14,10 +14,15 @@ class BookFactory extends Factory
     public function definition(): array
     {
         return [
-            "author" => fake()->name(),
-            'category_id' => rand(1, 6),
-            'quantity' => rand(1,20),
-            'name' => [
+            "author" =>[
+                "en" => fake()->name(),
+                "ru" => "Russian->".fake()->name(),
+                "uz" => "Uzbek->".fake()->name(),
+            ],
+
+            "category_id" => rand(1, 6),
+            "quantity" => rand(1,20),
+            "name" => [
                 "en" => fake()->sentence(3),
                 "ru" => "Постройте жизнь, которую хотите: искусство и наука стать счастливее",
                 "uz" => "O'zingiz xohlagan hayotni yarating: baxtli bo'lish san'ati va ilmi",

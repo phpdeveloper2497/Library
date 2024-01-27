@@ -11,18 +11,18 @@ class UpdateBookRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
+
     public function rules(): array
     {
+        $this->dd('og');
         return [
-            //
+            'category_id' =>'required',
+            'name' =>'required|string|max:255',
+            'author' =>'required|string|max:255',
+            'quantity' =>'required'
         ];
     }
 }

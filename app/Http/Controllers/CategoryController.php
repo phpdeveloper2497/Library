@@ -6,16 +6,19 @@ use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Auth\Access\Gate;
 
 class CategoryController extends Controller
 {
     public function __construct()
     {
-        return $this->middleware('auth:sanctum');
+         $this->middleware('auth:sanctum');
+         $this->authorizeResource(Category::class, 'category');
     }
 
     public function index()
     {
+
         return $this->response(CategoryResource::collection(Category::all()));
     }
 
@@ -32,7 +35,13 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+//        Gate::authorize('category:create');
+//        if ($request->user()->hasPermissionTo('category:create'))
+//        {
+//        dd($request->toArray());
+            $category = Category::create($request->toArray());
+            return $this->success('Category created', $category);
+//        }
     }
 
     /**
@@ -40,7 +49,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return true;
     }
 
     /**
@@ -64,6 +73,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return $this->success('Category deleted successfully');
     }
 }

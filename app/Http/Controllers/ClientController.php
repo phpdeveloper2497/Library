@@ -5,16 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use Illuminate\Auth\Access\Gate;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ClientController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+        $this->authorizeResource(Client::class, 'client');
+    }
+
+
     public function index()
     {
-       $clients = Client::all();
-       return $this->response($clients);
+        $client = Client::all();
+        return $this->response($client);
     }
 
     /**
@@ -30,7 +40,18 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
-        //
+        if (auth()->user()->hasPermissionTo('client:create'))
+        {
+        $client = Client::create($request->all());
+        if ($request->file('photo')) {
+            $path = $request->file('photo')->store("clients/" . $client->id, "public");
+            $client->photo()->create([
+                "full_name" => $request->file('photo')->getClientOriginalName(),
+                "path" => $path,
+            ]);
+            return $this->success('Client created', $client);
+        }
+        }
     }
 
     /**
@@ -62,6 +83,38 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        //
+        if (auth()->user()->hasPermissionTo('client:delete')) {
+
+            $directory = $client->photo->path;
+            Storage::disk('public')->delete($directory);
+
+            File::deleteDirectory(public_path('storage/' . 'clients/' . "$client->id"));
+
+            $client->delete();
+
+            return $this->success('Client deleted successfully');
+        }
     }
+
+//    public function updatePhoto(Client $client, UpdatePhotoBookRequest $request)
+//    {
+////        Gate::authorize('user:update');
+//        Gate::authorize('client:update');
+//
+//
+//        if ($client->photo->path != '' && $client->photo->path != null) {
+//            $directory = $client->photo->path;
+//            Storage::disk('public')->delete($directory);
+//        }
+//
+//        if ($request->file('photo')) {
+//            $path = $request->file('photo')->store("clients/" . $client->id, 'public');
+//            $client->photo()->create([
+//                "full_name" => $request->file('photo')->getClientOriginalName(),
+//                "path" => $path
+//            ]);
+//
+//            return $this->success('photo updated successfully');
+//        }
+//    }
 }

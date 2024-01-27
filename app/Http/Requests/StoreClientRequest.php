@@ -11,18 +11,18 @@ class StoreClientRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
+
     public function rules(): array
     {
         return [
-            //
+            "full_name" => "required|string|max:255",
+            "library_card_id" => "required",
+            "phone_number" => "required",
+            "photo" => "nullable|file|mimes:jpeg,bmp,png|max:512",
+
         ];
     }
 }

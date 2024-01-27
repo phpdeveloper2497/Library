@@ -13,7 +13,7 @@ class ClientPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->hasRole('admin') || $user->hasPermissionTo('client:viewAny');
     }
 
     /**
@@ -21,7 +21,8 @@ class ClientPolicy
      */
     public function view(User $user, Client $client): bool
     {
-        //
+        return $user->hasRole('admin') || $user->hasPermissionTo('client:view');
+
     }
 
     /**
@@ -29,7 +30,7 @@ class ClientPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->hasRole('admin') || $user->hasPermissionTo('client:create');
     }
 
     /**
@@ -37,7 +38,8 @@ class ClientPolicy
      */
     public function update(User $user, Client $client): bool
     {
-        //
+        return $user->hasRole('admin') || $user->hasPermissionTo('client:update');
+
     }
 
     /**
@@ -45,7 +47,8 @@ class ClientPolicy
      */
     public function delete(User $user, Client $client): bool
     {
-        //
+        return $user->hasRole('admin') || $user->hasPermissionTo('client:delete');
+
     }
 
     /**

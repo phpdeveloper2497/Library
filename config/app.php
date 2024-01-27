@@ -98,11 +98,11 @@ return [
 
     'fallback_locale' => 'en',
 
-  /*  'all_locales' => [
-        'en' => 'English',
-        'ru' => 'Russian',
-        'uz' => 'Uzbek',
-    ],*/
+//  'all_locales' => [
+//        'en' => 'English',
+//        'ru' => 'Russian',
+//        'uz' => 'Uzbek',
+//    ],
 
     /*
     |--------------------------------------------------------------------------

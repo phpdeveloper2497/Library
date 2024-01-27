@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdatePhotoRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -15,7 +18,6 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth:sanctum');
-//        $this->authorizeResource(User::class, 'user');
 
 
     }
@@ -26,8 +28,9 @@ class UserController extends Controller
     public function index()
     {
 //        dd($user);
+
         $user = User::all();
-        return $this->response($user);
+        return $this->response(UserResource::collection($user));
     }
 
     /**
@@ -41,13 +44,14 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserRequest $request)
-    {
-        Gate::authorize('user:create');
-
-        $user = User::create($request->toArray());
-        return $this->success('user created', new UserResource($user));
-    }
+//    public function store(StoreUserRequest $request)
+//    {
+//        Gate::authorize('user:create');
+//        $user = User::create($request->toArray());
+//        $user->assignRole('librarian');
+//
+//        return $this->success('user created', new UserResource($user));
+//    }
 
     /**
      * Display the specified resource.
@@ -79,7 +83,12 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         Gate::authorize('user:delete');
-        $user/*->find($id)*/->delete();
+        $directory = $user->photo->path;
+
+        Storage::disk('public')->delete($directory);
+        File::deleteDirectory(public_path( 'storage/'.'users/'."$user->id"));
+        $user->delete();
+
         return $this->success('user deleted');
     }
 
@@ -95,10 +104,35 @@ class UserController extends Controller
     {
        if ($id !== null)
        {
-           $forceDelete = User::withTrashed()->where('id', $id)->get();
-//        dd($forceDelete);
+           $forceDelete = User::withTrashed()->where('id', $id)->first();
            $forceDelete->forceDelete();
            return $this->success("id = $id user forceDeleted");
        }
+    }
+
+    public function updatePhoto(User $user, UpdatePhotoRequest $request)
+    {
+//        Gate::authorize('user:update');
+        Gate::authorize('user:update');
+
+
+        if ($user->photo->path != '' && $user->photo->path != null)
+        {
+            $directory = $user->photo->path;
+            Storage::disk('public')->delete($directory);
+        }
+
+        if($request->file('photo'))
+        {
+            $path = $request->file('photo')->store("users/".$user->id,'public');
+            $user->photo()->create([
+                "full_name" => $request->file('photo')->getClientOriginalName(),
+                "path" => $path
+            ]);
+
+            return $this->success('photo updated successfully');
+        }
+
+
     }
 }

@@ -14,7 +14,7 @@ class Category extends Model
 
     protected $fillable = ["name"];
 
-    public $translatable = ["name"];
+    public  array $translatable = ["name"];
 
     public function books():HasMany
     {

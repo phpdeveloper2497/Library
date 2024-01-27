@@ -13,7 +13,8 @@ class CategoryPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->hasPermissionTo('category:viewAny');
+
     }
 
     /**
@@ -29,7 +30,7 @@ class CategoryPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->hasPermissionTo('category:create');
     }
 
     /**
@@ -45,7 +46,7 @@ class CategoryPolicy
      */
     public function delete(User $user, Category $category): bool
     {
-        //
+        return $user->hasPermissionTo('category:delete');
     }
 
     /**
