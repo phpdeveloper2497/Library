@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdatePhotoBookRequest;
-use App\Http\Requests\UpdatePhotoRequest;
-use App\Http\Resources\BookResource;
-use App\Models\Book;
+use App\Events\Book\CreatedBook;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
+use App\Http\Resources\BookResource;
+use App\Models\Book;
 use App\Models\Photo;
-use Illuminate\Support\Facades\App;
+use App\Notifications\Book\CreatedNotification;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -49,6 +48,8 @@ class BookController extends Controller
                     "path" => $path
                 ]);
             }
+            CreatedBook::dispatch($book);
+
             return $this->success('Book created successfully', $book);
         }
     }

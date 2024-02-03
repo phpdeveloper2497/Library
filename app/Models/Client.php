@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Notifications\Notifiable;
 
 class Client extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
-    protected $fillable = ['full_name','library_card_id','phone_number'];
+    protected $fillable = ['full_name','library_card_id','phone_number','email'];
 
 //    public function __construct()
 //    {

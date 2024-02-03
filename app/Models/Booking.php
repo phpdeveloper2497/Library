@@ -27,9 +27,14 @@ class Booking extends Model
         return $this->belongsTo(Client::class);
     }
 
-    public function book():HasOne
+    public function book():BelongsTo
     {
-        return $this->hasOne(Book::class);
+        return $this->belongsTo(Book::class);
+    }
+
+    public function status(): BelongsTo
+    {
+        return $this->belongsTo(Status::class);
     }
 
 }

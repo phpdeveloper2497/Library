@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use App\Notifications\Client\RegisteredClient;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
 class ClientController extends Controller
@@ -49,6 +51,7 @@ class ClientController extends Controller
                 "full_name" => $request->file('photo')->getClientOriginalName(),
                 "path" => $path,
             ]);
+            Notification::send($client, new RegisteredClient($client));
             return $this->success('Client created', $client);
         }
         }

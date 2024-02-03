@@ -116,10 +116,12 @@ class UserController extends Controller
         Gate::authorize('user:update');
 
 
-        if ($user->photo->path != '' && $user->photo->path != null)
+        if ($user->photo->path != '' || $user->photo->path != null)
         {
             $directory = $user->photo->path;
             Storage::disk('public')->delete($directory);
+            $user->photo()->delete();
+            //TODO:  check
         }
 
         if($request->file('photo'))

@@ -31,10 +31,10 @@ class AuthServiceProvider extends ServiceProvider
         Role::class => RolePolicy::class,
         Permission::class => PermissionPolicy::class,
         User::class => UserPolicy::class,
-        Booking::class => BookingPolicy::class,
+        Category::class => CategoryPolicy::class,
         Book::class => BookPolicy::class,
         Client::class => ClientPolicy::class,
-        Category::class => CategoryPolicy::class,
+        Booking::class => BookingPolicy::class,
 
     ];
 

@@ -6,18 +6,11 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\UserController;
+use App\Models\Booking;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+
 
 Route::get('/users/{user}/restore', [UserController::class, 'restore'])->middleware('auth:sanctum');
 Route::get('/users/{user}/forceDelete', [UserController::class, 'forceDelete'])->middleware('auth:sanctum');
@@ -27,13 +20,18 @@ Route::get('/bookings/data-should', [BookingController::class, 'booksReturnedTod
 //Route::post('/clients/{client}/updatePhoto', [ClientController::class, 'updatePhoto'])->middleware('auth:sanctum');
 
 
+//Route::get('bookings', function ()
+//{
+////    $booking = BookingController::;
+////    Mail::to('bukharacity1997@gmail.com')->send(new \App\Mail\Booking\Confirmed($booking));
+//});
 
 Route::resources([
     'users' => UserController::class,
     'books' => BookController::class,
     'categories' => CategoryController::class,
     'books.book' => BookController::class,
-    'clients'=> ClientController::class,
+    'clients' => ClientController::class,
     'bookings' => BookingController::class,
 ]);
 

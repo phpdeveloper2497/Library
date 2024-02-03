@@ -2,12 +2,16 @@
 
 namespace App\Providers;
 
+use App\Events\Book\CreatedBook;
+use App\Listeners\CreatedBookNotificationToAdmin;
+use App\Listeners\CreatedBookToEmailToUser;
+use App\Models\Booking;
+use App\Observers\BookingObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
-class EventServiceProvider extends ServiceProvider
+class   EventServiceProvider extends ServiceProvider
 {
     /**
      * The event to listener mappings for the application.
@@ -18,6 +22,15 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        CreatedBook::class => [
+            CreatedBookNotificationToAdmin::class,
+            CreatedBookToEmailToUser::class,
+        ]
+    ];
+
+    protected $observers = [
+        Booking::class => [BookingObserver::class],
+//        Client::class => [ClientObserver::class],
     ];
 
     /**
@@ -27,6 +40,7 @@ class EventServiceProvider extends ServiceProvider
     {
         //
     }
+
 
     /**
      * Determine if events and listeners should be automatically discovered.

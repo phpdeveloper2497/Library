@@ -20,7 +20,7 @@ class ClientFactory extends Factory
             'full_name' =>fake()->name(),
             'library_card_id' =>rand(10000,99999),
             'phone_number' => fake()->phoneNumber,
-
+            'email' => fake()->email
         ];
     }
 }

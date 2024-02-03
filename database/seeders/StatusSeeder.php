@@ -32,7 +32,7 @@ class StatusSeeder extends Seeder
                 'uz' => 'o\'quvchi kitoblarni oldi',
             ],
             'for' =>'booking',
-            'code' => 'take'
+            'code' => 'confirmed'
 
         ]);
 
@@ -53,7 +53,7 @@ class StatusSeeder extends Seeder
                 'uz' => 'o\'quvchida qaytarilmagan kitoblar bor',
             ],
             'for' =>'booking',
-            'code' => 'didn\'t return',
+            'code' => 'debtor',
         ]);
     }
 }
