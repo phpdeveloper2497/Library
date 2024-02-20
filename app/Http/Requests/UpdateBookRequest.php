@@ -17,7 +17,7 @@ class UpdateBookRequest extends FormRequest
 
     public function rules(): array
     {
-        $this->dd('og');
+    
         return [
             'category_id' =>'required',
             'name' =>'required|string|max:255',

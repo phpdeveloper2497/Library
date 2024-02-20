@@ -51,7 +51,7 @@ class ClientController extends Controller
                 "full_name" => $request->file('photo')->getClientOriginalName(),
                 "path" => $path,
             ]);
-            Notification::send($client, new RegisteredClient($client));
+//            Notification::send($client, new RegisteredClient($client));
             return $this->success('Client created', $client);
         }
         }
