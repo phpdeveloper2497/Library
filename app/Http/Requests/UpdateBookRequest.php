@@ -11,18 +11,21 @@ class UpdateBookRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return  'ok';
+//        return true;
     }
 
 
     public function rules(): array
     {
-    
+
         return [
             'category_id' =>'required',
             'name' =>'required|string|max:255',
             'author' =>'required|string|max:255',
-            'quantity' =>'required'
+            'quantity' =>'required',
+//            'photo' =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:512'
+
         ];
     }
 }

@@ -38,7 +38,8 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        //
+//        return $user->hasRole('admin') || $user->hasPermissionTo('user:update');
+        return  true;
     }
 
     /**

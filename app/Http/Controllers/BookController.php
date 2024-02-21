@@ -67,14 +67,23 @@ class BookController extends Controller
      */
     public function update(UpdateBookRequest $request, Book $book)
     {
-//            $book->users()->id = $request->id;
+        dd($book);
+        echo 'name';
+//       if (auth()->user()->hasPermissionTo('book:create') )
+//        if ($request->book->id)
+//        {
+//            $book->id = $request->id;
 //            $book->category_id =  $request->category_id;
 //            $book->name = $request->name;
 //            $book->author = $request->author;
 //            $book->quantity = $request->quantity;
-//            $book->save();
+//            $book->update();
 //            return $this->success('Book updated' , $book);
+//        }else{
+//            return $this->error('Book not found');
+//
 //dd($request->all());
+//        }
 //        $book = Book::findOrFail($request->id);
 //        $book->update($request->all());
 //        return $this->success('Book updated', $book);
