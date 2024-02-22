@@ -13,22 +13,40 @@ class UpdateUserRequest extends FormRequest
     {
         return true;
     }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
-        dd('ko');
+//        dd('ko');
         return [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|email',
             'password' => 'required',
-            'password_confirmation' => 'required',
-            'phone' => 'required|string|max:255',
+//            'password_confirmation' => 'required',
+            'phone' => 'required|string',
         ];
+//        return [
+//            'first_name' => [
+//                'required',
+//                'string',
+//                'max:255'
+//            ],
+//            'last_name' =>
+//             [
+//                'required',
+//                'string',
+//                'max:255'
+//                ],
+//            'email' => [
+//                'required',
+//                'email',
+//                'max:255'],
+//            'password' => ['required'],
+//             'password_confirmation' => ['required'],
+//                'phone' => [
+//                'required',
+//                'string',
+//                'max:255'
+//                ]
+//            ];
     }
 }

@@ -7,8 +7,10 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -74,8 +76,15 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-//        Gate::authorize('user:update');
-        return 'user:updated';
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->phone = $request->phone;
+            $user->update();
+
+            return $this->success('user updated', $user);
+
     }
 
     /**
@@ -87,7 +96,7 @@ class UserController extends Controller
         $directory = $user->photo->path;
 
         Storage::disk('public')->delete($directory);
-        File::deleteDirectory(public_path( 'storage/'.'users/'."$user->id"));
+        File::deleteDirectory(public_path('storage/' . 'users/' . "$user->id"));
         $user->delete();
 
         return $this->success('user deleted');
@@ -97,18 +106,17 @@ class UserController extends Controller
     {
         Gate::authorize('user:restore');
 
-     User::withTrashed()->where('id', $id)->restore();
+        User::withTrashed()->where('id', $id)->restore();
         return $this->success("id = $id user restored");
     }
 
     public function forceDelete(string $id)
     {
-       if ($id !== null)
-       {
-           $forceDelete = User::withTrashed()->where('id', $id)->first();
-           $forceDelete->forceDelete();
-           return $this->success("id = $id user forceDeleted");
-       }
+        if ($id !== null) {
+            $forceDelete = User::withTrashed()->where('id', $id)->first();
+            $forceDelete->forceDelete();
+            return $this->success("id = $id user forceDeleted");
+        }
     }
 
     public function updatePhoto(User $user, UpdatePhotoRequest $request)
@@ -117,17 +125,15 @@ class UserController extends Controller
         Gate::authorize('user:update');
 
 
-        if ($user->photo->path != '' || $user->photo->path != null)
-        {
+        if ($user->photo->path != '' || $user->photo->path != null) {
             $directory = $user->photo->path;
             Storage::disk('public')->delete($directory);
             $user->photo()->delete();
             //TODO:  check
         }
 
-        if($request->file('photo'))
-        {
-            $path = $request->file('photo')->store("users/".$user->id,'public');
+        if ($request->file('photo')) {
+            $path = $request->file('photo')->store("users/" . $user->id, 'public');
             $user->photo()->create([
                 "full_name" => $request->file('photo')->getClientOriginalName(),
                 "path" => $path

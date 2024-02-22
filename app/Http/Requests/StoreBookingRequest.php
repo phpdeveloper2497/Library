@@ -44,7 +44,6 @@ class StoreBookingRequest extends FormRequest
             ],
             'books.*.to' => [
                 'required',
-//                'date'
             ],
             'status_id' => 'required|numeric'
         ];

@@ -35,8 +35,8 @@ class BookController extends Controller
         if (auth()->user()->hasPermissionTo('book:create')) {
             $book = Book::create([
                 'category_id' => $request->category_id,
-                'name' => $request->name,
-                'author' => $request->author,
+                'name' => $request->name->toArray(),
+                'author' => $request->author->toArray(),
                 'quantity' => $request->quantity
             ]);
 
@@ -67,31 +67,21 @@ class BookController extends Controller
      */
     public function update(UpdateBookRequest $request, Book $book)
     {
-        dd($book);
-        echo 'name';
-//       if (auth()->user()->hasPermissionTo('book:create') )
-//        if ($request->book->id)
-//        {
-//            $book->id = $request->id;
-//            $book->category_id =  $request->category_id;
-//            $book->name = $request->name;
-//            $book->author = $request->author;
-//            $book->quantity = $request->quantity;
-//            $book->update();
-//            return $this->success('Book updated' , $book);
-//        }else{
-//            return $this->error('Book not found');
-//
-//dd($request->all());
-//        }
-//        $book = Book::findOrFail($request->id);
-//        $book->update($request->all());
-//        return $this->success('Book updated', $book);
+
+        if (auth()->user()->hasPermissionTo('book:create'))
+            if ($request->book) {
+//                $book->id = $request->id;
+                $book->category_id = $request->category_id;
+                $book->name = $request->name;
+                $book->author = $request->author;
+                $book->quantity = $request->quantity;
+                $book->update();
+                return $this->success('Book updated', $book);
+            } else {
+                return $this->error('Book not found');
+            }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Book $book, Photo $photo)
     {
         Storage::disk('public')->delete("$book->photo->path");
