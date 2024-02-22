@@ -14,7 +14,7 @@ class BookResource extends JsonResource
             'book_id' => $this->id,
             'category' => new CategoryResource($this->category),
             'name' => $this->getTranslations('name')->toArray(),
-            'author' => $this->getTranslations('author')->toArray(),
+            'author' => $this->getTranslations('author'),
         ];
     }
 }
