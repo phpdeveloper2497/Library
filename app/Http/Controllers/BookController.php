@@ -35,8 +35,8 @@ class BookController extends Controller
         if (auth()->user()->hasPermissionTo('book:create')) {
             $book = Book::create([
                 'category_id' => $request->category_id,
-                'name' => $request->name->toArray(),
-                'author' => $request->author->toArray(),
+                'name' => $request->name,
+                'author' => $request->author,
                 'quantity' => $request->quantity
             ]);
 
