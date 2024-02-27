@@ -66,7 +66,7 @@ class RolePermissionSeeder extends Seeder
         ];
 
         $admin = Role::create(['name' => 'admin', 'guard_name' => 'web']);
-        $admin->syncPermissions($permissions, $categoryPermissions, $bookPermissions, $userPermissions,$clientPermissions);
+        $admin->syncPermissions($permissions, $categoryPermissions, $bookPermissions, $userPermissions,$clientPermissions,$bookingPermissions);
 
         $cheif_libraryPermission = Role::create(['name' => 'chief_librarian', 'guard_name' => 'web']);
         $cheif_libraryPermission->syncPermissions($categoryPermissions, $bookPermissions, $clientPermissions,$bookingPermissions);

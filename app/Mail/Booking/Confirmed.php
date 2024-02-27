@@ -20,8 +20,7 @@ class Confirmed extends Mailable
     public function __construct(
         public Booking $booking
     )
-    {
-    }
+    { }
 
     /**
      * Get the message envelope.

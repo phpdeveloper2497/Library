@@ -19,8 +19,9 @@ class BookingResource extends JsonResource
     {
         return [
             'booking_id' => $this->id,
-            'user' => new UserResource($this->user),
+            'user' =>  new UserBokingResource($this->user),      /*new UserResource($this->user),*/
             'status_id' => $this->status_id,
+            'book' => new BookBokingResource($this->book),
             'client' => new ClientResource($this->client),
         ];
     }

@@ -29,7 +29,6 @@ class BookingController extends Controller
         if (auth()->user()->hasPermissionTo('booking:viewAny')) {
             return $this->response(BookingResource::collection(Booking::all()));
         }
-//        return 'ok';
     }
 
 
@@ -40,7 +39,7 @@ class BookingController extends Controller
             $client_id = $request->get('client_id');
             $status = $request->get('status_id');
             foreach ($request->books as $book) {
-                $request->user()->bookings()->create([
+               $book_create =  $request->user()->bookings()->create([
                     'book_id' => $book['book_id'],
                     'client_id' => $client_id,
                     'status_id' => $status,
@@ -52,7 +51,7 @@ class BookingController extends Controller
 //            Mail::to('bukharacity1997@gmail.com')->send(new \App\Mail\Booking\Confirmed($booking));
 
 //            Mail::to($request->client)->send(new Confirmed($booking));
-            return $this->success('booking created', $booking);
+            return $this->success('Your booking has been made successfully',new BookingResource($book_create));
         }
 
 
