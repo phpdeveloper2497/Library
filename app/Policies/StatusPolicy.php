@@ -13,7 +13,8 @@ class StatusPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return  $user->hasPermissionTo('status:viewAny');
+
     }
 
     /**
@@ -29,7 +30,7 @@ class StatusPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return  $user->hasPermissionTo('status:create');
     }
 
     /**
@@ -45,7 +46,8 @@ class StatusPolicy
      */
     public function delete(User $user, Status $status): bool
     {
-        //
+            return  $user->hasPermissionTo('status:delete');
+
     }
 
     /**

@@ -65,8 +65,15 @@ class RolePermissionSeeder extends Seeder
             Permission::create(['name' => 'booking:delete']),
         ];
 
+        $statusPermissions = [
+            Permission::create(['name' => 'status:viewAny']),
+            Permission::create(['name' => 'status:view']),
+            Permission::create(['name' => 'status:create']),
+            Permission::create(['name' => 'status:delete']),
+        ];
+
         $admin = Role::create(['name' => 'admin', 'guard_name' => 'web']);
-        $admin->syncPermissions($permissions, $categoryPermissions, $bookPermissions, $userPermissions,$clientPermissions,$bookingPermissions);
+        $admin->syncPermissions($permissions, $categoryPermissions, $bookPermissions, $userPermissions,$clientPermissions,$bookingPermissions, $statusPermissions);
 
         $cheif_libraryPermission = Role::create(['name' => 'chief_librarian', 'guard_name' => 'web']);
         $cheif_libraryPermission->syncPermissions($categoryPermissions, $bookPermissions, $clientPermissions,$bookingPermissions);

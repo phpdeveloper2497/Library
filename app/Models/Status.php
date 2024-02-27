@@ -10,7 +10,7 @@ class Status extends Model
 {
     use HasFactory, HasTranslations;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name',"for","code"];
 
     public array $translatable = ['name', 'for'];
 

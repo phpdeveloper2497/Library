@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
 use App\Models\Booking;
 use Illuminate\Support\Facades\Mail;
@@ -35,6 +36,7 @@ Route::resources([
     'books.book' => BookController::class,
     'clients' => ClientController::class,
     'bookings' => BookingController::class,
+    'statuses' => StatusController::class
 ]);
 
 

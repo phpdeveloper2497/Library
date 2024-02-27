@@ -7,6 +7,7 @@ use App\Models\Book;
 use App\Models\Booking;
 use App\Models\Category;
 use App\Models\Client;
+use App\Models\Status;
 use App\Models\User;
 use App\Policies\BookPolicy;
 use App\Policies\BookingPolicy;
@@ -14,6 +15,7 @@ use App\Policies\CategoryPolicy;
 use App\Policies\ClientPolicy;
 use App\Policies\PermissionPolicy;
 use App\Policies\RolePolicy;
+use App\Policies\StatusPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -35,6 +37,7 @@ class AuthServiceProvider extends ServiceProvider
         Book::class => BookPolicy::class,
         Client::class => ClientPolicy::class,
         Booking::class => BookingPolicy::class,
+        Status::class => StatusPolicy::class
 
     ];
 

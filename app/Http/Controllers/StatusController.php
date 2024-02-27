@@ -11,9 +11,18 @@ class StatusController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+        $this->authorizeResource(Status::class, 'status');
+    }
+
     public function index()
     {
-        //
+        if (auth()->user()->hasPermissionTo('status:viewAny')) {
+//            return $this->response($this->status);
+            return 'View statuses';
+        }
     }
 
     /**
@@ -29,7 +38,15 @@ class StatusController extends Controller
      */
     public function store(StoreStatusRequest $request)
     {
-        //
+        if (auth()->user()->hasPermissionTo('status:create')) {
+
+            $status = Status::create([
+                'name' => $request->name,
+                'for' =>$request->for,
+                'code' =>$request->code
+                ]);
+        }
+        return $this->success('Status created', $status);
     }
 
     /**
@@ -61,6 +78,9 @@ class StatusController extends Controller
      */
     public function destroy(Status $status)
     {
-        //
+        if (auth()->user()->hasPermissionTo('status:delete')) {
+            $status->delete();
+            return $this->success('Status deleted');
+        }
     }
 }
