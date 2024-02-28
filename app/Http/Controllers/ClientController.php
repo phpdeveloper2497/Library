@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BookBokingResource;
+use App\Http\Resources\ClientBookingResource;
 use App\Models\Client;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
@@ -62,7 +64,9 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        //
+        if(auth()->user()->hasPermissionTo('client:view')){
+            return $this->response(new ClientBookingResource($client->load('bookings.book')));
+        }
     }
 
     /**

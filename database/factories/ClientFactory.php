@@ -17,10 +17,12 @@ class ClientFactory extends Factory
     public function definition(): array
     {
         return [
-            'full_name' =>fake()->name(),
-            'library_card_id' =>rand(10000,99999),
-            'phone_number' => fake()->phoneNumber,
-            'email' => fake()->email
+            'full_name' => fake()->name(),
+            'library_card_id' => rand(100000, 999999),
+            'passport_series_number' =>fake()->regexify('[A-E]{2} [0-9]{7}'),
+            'address' =>fake()->address,
+            'email' => fake()->email,
+            'phone_number' => fake()->phoneNumber
         ];
     }
 }

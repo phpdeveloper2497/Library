@@ -13,7 +13,7 @@ class Client extends Model
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = ['full_name','library_card_id','phone_number','email'];
+    protected $fillable = ['full_name','library_card_id','passport_series_number','address','phone_number','email',];
 
 //    public function __construct()
 //    {

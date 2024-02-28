@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('full_name');
             $table->string('email')->unique();
-            $table->unsignedBigInteger('library_card_id')->unique();
             $table->string('phone_number')->unique();
+            $table->string('passport_series_number')->unique();
+            $table->string('address');
+            $table->unsignedBigInteger('library_card_id')->unique();
             $table->timestamps();
         });
     }

@@ -20,8 +20,7 @@ class StatusController extends Controller
     public function index()
     {
         if (auth()->user()->hasPermissionTo('status:viewAny')) {
-//            return $this->response($this->status);
-            return 'View statuses';
+            return $this->response(Status::all());
         }
     }
 
