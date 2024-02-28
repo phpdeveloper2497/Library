@@ -21,8 +21,7 @@ class StoreClientRequest extends FormRequest
             "full_name" => "required|string|max:255",
             "library_card_id" => "required",
             "phone_number" => "required",
-            "photo" => "nullable|file|mimes:jpeg,bmp,png|max:512",
-
+            "photo" => "required|file|mimes:jpeg,bmp,png|max:512",
         ];
     }
 }

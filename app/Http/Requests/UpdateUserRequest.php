@@ -24,29 +24,6 @@ class UpdateUserRequest extends FormRequest
 //            'password_confirmation' => 'required',
             'phone' => 'required|string',
         ];
-//        return [
-//            'first_name' => [
-//                'required',
-//                'string',
-//                'max:255'
-//            ],
-//            'last_name' =>
-//             [
-//                'required',
-//                'string',
-//                'max:255'
-//                ],
-//            'email' => [
-//                'required',
-//                'email',
-//                'max:255'],
-//            'password' => ['required'],
-//             'password_confirmation' => ['required'],
-//                'phone' => [
-//                'required',
-//                'string',
-//                'max:255'
-//                ]
-//            ];
+
     }
 }

@@ -22,7 +22,8 @@ class StoreBookRequest extends FormRequest
             'name' =>'required|string|max:255',
             'author' =>'required|string|max:255',
             'quantity' =>'required',
-            'photo' =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:512'
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:512'
         ];
+
     }
 }

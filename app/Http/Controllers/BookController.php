@@ -33,6 +33,7 @@ class BookController extends Controller
     public function store(StoreBookRequest $request)
     {
         if (auth()->user()->hasPermissionTo('book:create')) {
+
             $book = Book::create([
                 'category_id' => $request->category_id,
                 'name' => $request->name,
