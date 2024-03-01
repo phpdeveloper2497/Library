@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class BookResource extends JsonResource
 {
@@ -16,6 +17,8 @@ class BookResource extends JsonResource
             'name' => $this->getTranslations('name'),
             'author' => $this->getTranslations('author'),
             'quantity' => $this->quantity,
+            'path' => url(Storage::url($this->photo->path)),
+            'created_at' => $this->created_at,
         ];
     }
 }

@@ -20,7 +20,7 @@ class BookController extends Controller
         $this->authorizeResource(Book::class, 'book');
     }
 
-    public function index()
+    public function index(Book $book)
     {
         if (auth()->user()->hasPermissionTo('book:viewAny')) {
             return $this->response(BookResource::collection(Book::all()));
@@ -50,7 +50,7 @@ class BookController extends Controller
                 ]);
             }
             CreatedBook::dispatch($book);
-
+//            dd($book->photo());
             return $this->success('Book created successfully', $book);
         }
     }
@@ -60,6 +60,8 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
+//        dd(url(Storage::url($book->photo->path));
+
         return $this->response(new BookResource($book));
     }
 
