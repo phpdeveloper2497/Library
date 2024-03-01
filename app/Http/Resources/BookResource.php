@@ -17,7 +17,7 @@ class BookResource extends JsonResource
             'name' => $this->getTranslations('name'),
             'author' => $this->getTranslations('author'),
             'quantity' => $this->quantity,
-            'path' => url(Storage::url($this->photo->path)),
+            'path' => $this->photo ? url(Storage::url($this->photo->path)) : null,
             'created_at' => $this->created_at,
         ];
     }

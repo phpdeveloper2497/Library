@@ -23,7 +23,7 @@ class BookController extends Controller
     public function index(Book $book)
     {
         if (auth()->user()->hasPermissionTo('book:viewAny')) {
-            return $this->response(BookResource::collection(Book::all()));
+                return $this->response(BookResource::collection(Book::all()));
         }
     }
 
