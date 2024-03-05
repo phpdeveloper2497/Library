@@ -48,7 +48,7 @@ class BookingController extends Controller
                     'to' => $book['to'],
                     'user_id' => $request->user()->id
                 ]);
-                Book::query()->where('id', '=', $book['book_id'])->decrement('quantity');
+                //Book::query()->where('id', '=', $book['book_id'])->decrement('quantity');
             }
             return $this->success('Your booking has been made successfully', []);
         }
