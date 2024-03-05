@@ -51,7 +51,7 @@ class BookingController extends Controller
                 $booking = Book::query()->where('id', '=', $book['book_id'])->decrement('quantity');
             }
 //            Mail::to('bukharacity1997@gmail.com')->send(new \App\Mail\Booking\Confirmed($booking));
-
+//            return 'ok'
 //            Mail::to($request->client)->send(new Confirmed($booking));
             return $this->success('Your booking has been made successfully',new BookingResource($book_create));
         }
