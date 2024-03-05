@@ -29,7 +29,7 @@ class BookingController extends Controller
         if (auth()->user()->hasPermissionTo('booking:viewAny')) {
 //            $booking = Booking::query()->where('book_id')->get();
             $booking = Booking::all();
-            return $this->response(BookingResource::collection($booking.book));
+            return $this->response(BookingResource::collection($booking));
         }
     }
 
