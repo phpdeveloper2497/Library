@@ -41,7 +41,7 @@ class BookingController extends Controller
             $client_id = $request->get('client_id');
             $status = $request->get('status_id');
             foreach ($request->get('books') as $book) {
-                $request->user('api')->bookings()->create([
+                $request->user()->bookings()->create([
                     'book_id' => $book['book_id'],
                     'client_id' => $client_id,
                     'status_id' => $status,
