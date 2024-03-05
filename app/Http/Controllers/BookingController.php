@@ -50,7 +50,7 @@ class BookingController extends Controller
 //                ]);
 //                Book::query()->where('id', '=', $book['book_id'])->decrement('quantity');
             }
-            return $this->success('Your booking has been made successfully',new BookingResource($book_create));
+            return $this->success('Your booking has been made successfully', []);
         }
 
 
