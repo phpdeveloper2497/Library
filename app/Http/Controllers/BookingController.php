@@ -37,7 +37,6 @@ class BookingController extends Controller
     public function store(StoreBookingRequest $request)
     {
 
-        dd($request);
         if (auth()->user()->hasPermissionTo('booking:create')) {
             $client_id = $request->get('client_id');
             $status = $request->get('status_id');
