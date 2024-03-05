@@ -35,29 +35,7 @@ class UserController extends Controller
         return $this->response(UserResource::collection($user));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-//    public function store(StoreUserRequest $request)
-//    {
-//        Gate::authorize('user:create');
-//        $user = User::create($request->toArray());
-//        $user->assignRole('librarian');
-//
-//        return $this->success('user created', new UserResource($user));
-//    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(User $user)
     {
         //
@@ -93,13 +71,17 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         Gate::authorize('user:delete');
-        $directory = $user->photo->path;
+        $directory = $user?->photo?->path;
+        if($directory){
+            Storage::disk('public')->delete($directory);
+            File::deleteDirectory(public_path('storage/' . 'users/' . "$user->id"));
+            $user->delete();    
+        }else{
+            $user->delete();
+        }
 
-        Storage::disk('public')->delete($directory);
-        File::deleteDirectory(public_path('storage/' . 'users/' . "$user->id"));
-        $user->delete();
+            return $this->success('user deleted');
 
-        return $this->success('user deleted');
     }
 
     public function restore(string $id)

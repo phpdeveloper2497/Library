@@ -27,7 +27,9 @@ class BookingController extends Controller
     public function index()
     {
         if (auth()->user()->hasPermissionTo('booking:viewAny')) {
-            return $this->response(BookingResource::collection(Booking::all()));
+//            $booking = Booking::query()->where('book_id')->get();
+            $booking = Booking::all();
+            return $this->response(BookingResource::collection($booking.book));
         }
     }
 

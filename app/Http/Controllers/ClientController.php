@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\BookBokingResource;
 use App\Http\Resources\ClientBookingResource;
+use App\Http\Resources\ClientResource;
 use App\Models\Client;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
@@ -28,7 +29,7 @@ class ClientController extends Controller
     public function index()
     {
         $client = Client::all();
-        return $this->response($client);
+        return $this->response(ClientResource::collection($client));
     }
 
     /**

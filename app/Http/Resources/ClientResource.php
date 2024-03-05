@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class ClientResource extends JsonResource
 {
@@ -17,7 +18,11 @@ class ClientResource extends JsonResource
         return [
             'id' => $this->id,
             'full_name' => $this->full_name,
-            'library_card_id' => $this->library_card_id,
+            'email' => $this->email,
+            'phone_number' => $this->phone_number,
+            'passport_series_number' => $this->passport_series_number,
+            'address' => $this->address,
+            'path' => $this->photo? url(Storage::url($this->photo->path)) : null,
         ];
     }
 }
