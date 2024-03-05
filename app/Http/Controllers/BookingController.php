@@ -40,14 +40,15 @@ class BookingController extends Controller
         if (auth()->user()->hasPermissionTo('booking:create')) {
             $client_id = $request->get('client_id');
             $status = $request->get('status_id');
-            foreach ($request->books as $book) {
-               $book_create =  $request->user()->bookings()->create([
-                    'book_id' => $book['book_id'],
-                    'client_id' => $client_id,
-                    'status_id' => $status,
-                    'to' => $book['to']
-                ]);
-                Book::query()->where('id', '=', $book['book_id'])->decrement('quantity');
+            foreach ($request->get('books') as $book) {
+                dump($book);
+//               $book_create =  $request->user()->bookings()->create([
+//                    'book_id' => $book['book_id'],
+//                    'client_id' => $client_id,
+//                    'status_id' => $status,
+//                    'to' => $book['to']
+//                ]);
+//                Book::query()->where('id', '=', $book['book_id'])->decrement('quantity');
             }
             return $this->success('Your booking has been made successfully',new BookingResource($book_create));
         }
