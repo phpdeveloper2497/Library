@@ -40,6 +40,7 @@ class BookingController extends Controller
         if (auth()->user()->hasPermissionTo('booking:create')) {
             $client_id = $request->get('client_id');
             $status = $request->get('status_id');
+            dd($request->user());
             foreach ($request->get('books') as $book) {
 //                $request->user()->bookings()->create([
 //                    'book_id' => $book['book_id'],
