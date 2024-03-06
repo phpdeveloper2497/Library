@@ -18,6 +18,13 @@ class BookBokingResource extends JsonResource
             'book_id' => $this->id,
             'name' => $this->getTranslations('name'),
             'author' => $this->getTranslations('author'),
+//            'book' => new BookResource($this->book)
+//            'book_id' => $this->id,
+//            'category' => new CategoryResource($this->category),
+//            'name' => $this->getTranslations('name'),
+//            'author' => $this->getTranslations('author'),
+
+//            'book' => new BookResource($this->book),
         ];
     }
 }

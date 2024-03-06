@@ -15,7 +15,7 @@ class Book extends Model
 {
     use HasFactory, HasTranslations, SoftDeletes,Notifiable;
 
-    protected $fillable = ['category_id','name','author','quantity'];
+    protected $fillable = ['category_id','name','author','created_at_book','quantity'];
 
     public $translatable = ['name', 'author'];
 

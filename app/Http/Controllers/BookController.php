@@ -38,6 +38,7 @@ class BookController extends Controller
                 'category_id' => $request->category_id,
                 'name' => $request->name,
                 'author' => $request->author,
+                'created_at_book' => $request->created_at_book,
                 'quantity' => $request->quantity
             ]);
 

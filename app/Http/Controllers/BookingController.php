@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BokingReturnTodayResource;
+use App\Http\Resources\BookBokingResource;
 use App\Http\Resources\ClientResource;
 use App\Http\Resources\BookingResource;
 use App\Mail\Booking\Confirmed;
@@ -28,7 +30,7 @@ class BookingController extends Controller
     {
         if (auth()->user()->hasPermissionTo('booking:viewAny')) {
 //            $booking = Booking::query()->where('book_id')->get();
-            $booking = Booking::all();
+            $booking = Booking::with('book','user')->get();
             return $this->response(BookingResource::collection($booking));
         }
     }
@@ -36,24 +38,23 @@ class BookingController extends Controller
 
     public function store(StoreBookingRequest $request)
     {
-
         if (auth()->user()->hasPermissionTo('booking:create')) {
-            $client_id = $request->get('client_id');
-            $status = $request->get('status_id');
+            $client_id = $request->client_id;
+            $status = $request->status_id;
+            $user = auth()->user()->id;
             foreach ($request->get('books') as $book) {
-                Booking::create([
+                $book_create = Booking::create([
                     'book_id' => $book['book_id'],
                     'client_id' => $client_id,
                     'status_id' => $status,
                     'to' => $book['to'],
-                    'user_id' => $request->user()->id
+                    'user_id' => $user
                 ]);
-                //Book::query()->where('id', '=', $book['book_id'])->decrement('quantity');
+                Book::query()->where('id', '=', $book['book_id'])->decrement('quantity');
+
             }
-            return $this->success('Your booking has been made successfully', []);
+            return $this->success('Your booking has been made successfully!!!'.' '.'Booking_id = '.$book_create->id);
         }
-
-
     }
 
 
@@ -85,6 +86,7 @@ class BookingController extends Controller
     public function booksReturnedToday()
     {
         $data_should = Booking::whereDate('to', Carbon::today())->get();
-        return $this->response(BookingResource::collection($data_should));
+//        dd($data_should);
+        return $this->response(BokingReturnTodayResource::collection($data_should));
     }
 }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained();
             $table->json('name');
             $table->json('author');
+            $table->date('created_at_book');
             $table->unsignedBigInteger('quantity');
             $table->softDeletes();
             $table->timestamps();
