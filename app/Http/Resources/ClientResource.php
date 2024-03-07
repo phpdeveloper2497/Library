@@ -20,9 +20,7 @@ class ClientResource extends JsonResource
             'full_name' => $this->full_name,
             'email' => $this->email,
             'phone_number' => $this->phone_number,
-            'passport_series_number' => $this->passport_series_number,
-            'address' => $this->address,
-            'path' => $this->photo? url(Storage::url($this->photo->path)) : null,
+//            'bookings_data' => collect($this->bookings->toArray())/*->only('id','created_at'),*/
         ];
     }
 }

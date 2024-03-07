@@ -66,7 +66,7 @@ class ClientController extends Controller
     public function show(Client $client)
     {
         if(auth()->user()->hasPermissionTo('client:view')){
-            return $this->response(new ClientBookingResource($client->load('bookings.book')));
+            return $this->response(new ClientBookingResource($client));
         }
     }
 

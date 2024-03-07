@@ -16,10 +16,14 @@ class ClientBookingResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-//            'client_id' => $this->id,
-            "full_name" => $this->full_name,
-            "library_card_id" => $this->library_card_id,
-            'bookings' => BookingResource::collection($this->whenLoaded('bookings'))
+            'id' => $this->id,
+            'full_name' => $this->full_name,
+            'email' => $this->email,
+            'phone_number' => $this->phone_number,
+            'passport_series_number' => $this->passport_series_number,
+            'address' => $this->address,
+            'path' => $this->photo? url(Storage::url($this->photo->path)) : null,
+            'bookings' =>  BookBokingResource::collection($this->bookings)
         ];
     }
 }
