@@ -54,6 +54,7 @@ class RolePermissionSeeder extends Seeder
             Permission::create(['name' => 'client:viewAny']),
             Permission::create(['name' => 'client:view']),
             Permission::create(['name' => 'client:create']),
+            Permission::create(['name' => 'client:update']),
             Permission::create(['name' => 'client:delete']),
             Permission::create(['name' => 'client:restore']),
         ];

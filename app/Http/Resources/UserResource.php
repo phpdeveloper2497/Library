@@ -22,7 +22,7 @@ class UserResource extends JsonResource
             "email" => $this->email,
             "phone" => $this->phone,
             "roles" => $this->roles->first()->name,
-            'path' => $this->path? url(Storage::url($this->photo->path)) : null,
+            'path' => $this->photo ? url(Storage::url($this->photo->path)) : null,
 
         ];
     }

@@ -28,8 +28,7 @@ class RegisterRequest extends FormRequest
             'password' => 'required',
             'password_confirmation' => 'required',
             'phone' => 'required|string|max:255',
-//            'photo' => 'nullable|file',
-            'photo' => 'nullable|file|mimes:jpeg,bmp,png|max:512',
+            'photo' => 'required|file|mimes:jpeg,bmp,png|max:512',
 
         ];
     }

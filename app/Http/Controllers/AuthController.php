@@ -37,7 +37,7 @@ class AuthController extends Controller
         return $this->success('User logged out');
     }
 
-    public function register(RegisterRequest $request)
+    public function register(RegisterRequest $request, )
     {
 
     $user = User::create([

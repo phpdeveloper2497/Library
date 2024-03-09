@@ -19,8 +19,8 @@ Route::post('/users/{user}/updatePhoto', [UserController::class, 'updatePhoto'])
 Route::get('/bookings/data-should', [BookingController::class, 'booksReturnedToday'])->middleware('auth:sanctum');
 
 
-//Route::put('/books/{id}/update', [BookController::class, 'update'])->middleware('auth:sanctum');
-//Route::post('/clients/{client}/updatePhoto', [ClientController::class, 'updatePhoto'])->middleware('auth:sanctum');
+Route::post('/books/{book}/updatePhoto', [BookController::class, 'updatePhoto'])->middleware('auth:sanctum');
+Route::post('/clients/{client}/updatePhoto', [ClientController::class, 'updatePhoto'])->middleware('auth:sanctum');
 
 
 //Route::get('bookings', function ()

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\Book\CreatedBook;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
+use App\Http\Requests\UpdatePhotoRequest;
 use App\Http\Resources\BookResource;
 use App\Models\Book;
 use App\Models\Photo;
@@ -23,7 +24,7 @@ class BookController extends Controller
     public function index(Book $book)
     {
         if (auth()->user()->hasPermissionTo('book:viewAny')) {
-                return $this->response(BookResource::collection(Book::all()));
+            return $this->response(BookResource::collection(Book::all()));
         }
     }
 
@@ -51,7 +52,6 @@ class BookController extends Controller
                 ]);
             }
             CreatedBook::dispatch($book);
-//            dd($book->photo());
             return $this->success('Book created successfully', $book);
         }
     }
@@ -61,9 +61,9 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-//        dd(url(Storage::url($book->photo->path));
-
-        return $this->response(new BookResource($book));
+        if (auth()->user()->hasPermissionTo('book:view')) {
+            return $this->response(new BookResource($book));
+        }
     }
 
     /**
@@ -90,31 +90,32 @@ class BookController extends Controller
     {
         Storage::disk('public')->delete("$book->photo->path");
 
-        File::DeleteDirectory('storage/'.'books/'."$book->id");
+        File::DeleteDirectory('storage/' . 'books/' . "$book->id");
 
         $book->delete();
         return $this->success('Book deleted');
     }
 
-//    public function UpdatePhoto(Book $book, UpdatePhotoBookRequest $request)
-//    {
-////        dd('ok');
-//        if (auth()->user()->hasPermissionTo('book:update'))
-//        {
-//            if($request->file('photo') !== '' && $request->file('photo') !== null)
-//            {
-//                Storage::disk('public')->delete("$book->photo->path");
-//            }
-//
-//            if($request->file('photo'))
-//            {
-//                $path = $request->file('photo')->store('books/'.$book->id, 'public');
-//            $book->photo->create([
-//                "path" => $path,
-//                "full_name" => $request->file('photo')->getClientOriginalName(),
-//            ]);
-//            }
-//            return $this->success('Book photo updated successfully');
-//        }
-//    }
+    public function updatePhoto(Book $book, UpdatePhotoRequest $request)
+    {
+        if (auth()->user()->hasPermissionTo('book:update')) {
+
+//            dd($book->photo->path);
+//            dd($request->file('photo'));
+            if ($request->file('photo') !== '' && $request->file('photo') !== null) {
+                $directory = $book->photo->path;
+                Storage::disk('public')->delete($directory);
+                $book->photo()->delete();
+            }
+
+            if ($request->file('photo')) {
+                $path = $request->file('photo')->store('books/' . $book->id, 'public');
+                $book->photo()->create([
+                    "path" => $path,
+                    "full_name" => $request->file('photo')->getClientOriginalName(),
+                ]);
+            }
+            return $this->success('Book photo updated successfully');
+        }
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdatePhotoRequest;
 use App\Http\Resources\BookBokingResource;
 use App\Http\Resources\ClientBookingResource;
 use App\Http\Resources\ClientResource;
@@ -65,17 +66,9 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        if(auth()->user()->hasPermissionTo('client:view')){
+        if (auth()->user()->hasPermissionTo('client:view')) {
             return $this->response(new ClientBookingResource($client));
         }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Client $client)
-    {
-        //
     }
 
     /**
@@ -104,25 +97,28 @@ class ClientController extends Controller
         }
     }
 
-//    public function updatePhoto(Client $client, UpdatePhotoBookRequest $request)
-//    {
-////        Gate::authorize('user:update');
-//        Gate::authorize('client:update');
-//
-//
-//        if ($client->photo->path != '' && $client->photo->path != null) {
-//            $directory = $client->photo->path;
-//            Storage::disk('public')->delete($directory);
-//        }
-//
-//        if ($request->file('photo')) {
-//            $path = $request->file('photo')->store("clients/" . $client->id, 'public');
-//            $client->photo()->create([
-//                "full_name" => $request->file('photo')->getClientOriginalName(),
-//                "path" => $path
-//            ]);
-//
-//            return $this->success('photo updated successfully');
-//        }
-//    }
+    public function updatePhoto(Client $client, UpdatePhotoRequest $request)
+    {
+        if (auth()->user()->hasPermissionTo('client:update')) {
+
+//            dd($client->photo->path);
+            if ($client->photo->path != '' && $client->photo->path != null) {
+                $directory = $client->photo->path;
+                Storage::disk('public')->delete($directory);
+            }
+
+            if ($request->file('photo')) {
+                $path = $request->file('photo')->store("clients/" . $client->id, 'public');
+                $client->photo()->create([
+                    "full_name" => $request->file('photo')->getClientOriginalName(),
+                    "path" => $path
+                ]);
+
+                return $this->success('photo updated successfully');
+            }
+        }
+    }
+
+
+
 }

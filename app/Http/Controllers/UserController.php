@@ -29,8 +29,7 @@ class UserController extends Controller
      */
     public function index()
     {
-//        dd($user);
-
+        Gate::authorize('user:viewAny');
         $user = User::all();
         return $this->response(UserResource::collection($user));
     }
@@ -38,7 +37,8 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        //
+        Gate::authorize('user:view');
+        return $this->response(new UserResource($user));
     }
 
     /**
@@ -54,14 +54,14 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-            $user->first_name = $request->first_name;
-            $user->last_name = $request->last_name;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
-            $user->phone = $request->phone;
-            $user->update();
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->phone = $request->phone;
+        $user->update();
 
-            return $this->success('user updated', $user);
+        return $this->success('user updated', $user);
 
     }
 
@@ -72,15 +72,15 @@ class UserController extends Controller
     {
         Gate::authorize('user:delete');
         $directory = $user?->photo?->path;
-        if($directory){
+        if ($directory) {
             Storage::disk('public')->delete($directory);
             File::deleteDirectory(public_path('storage/' . 'users/' . "$user->id"));
-            $user->delete();    
-        }else{
+            $user->delete();
+        } else {
             $user->delete();
         }
 
-            return $this->success('user deleted');
+        return $this->success('user deleted');
 
     }
 
@@ -103,9 +103,7 @@ class UserController extends Controller
 
     public function updatePhoto(User $user, UpdatePhotoRequest $request)
     {
-//        Gate::authorize('user:update');
         Gate::authorize('user:update');
-
 
         if ($user->photo->path != '' || $user->photo->path != null) {
             $directory = $user->photo->path;
