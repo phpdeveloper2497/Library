@@ -19,7 +19,9 @@ class ClientResource extends JsonResource
             'id' => $this->id,
             'full_name' => $this->full_name,
             'email' => $this->email,
+            'library_card_id' => $this->library_card_id,
             'phone_number' => $this->phone_number,
+
 //            'bookings_data' => collect($this->bookings->toArray())/*->only('id','created_at'),*/
         ];
     }
