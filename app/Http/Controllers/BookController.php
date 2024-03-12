@@ -10,6 +10,7 @@ use App\Http\Resources\BookResource;
 use App\Models\Book;
 use App\Models\Photo;
 use App\Notifications\Book\CreatedNotification;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,10 +22,33 @@ class BookController extends Controller
         $this->authorizeResource(Book::class, 'book');
     }
 
-    public function index(Book $book)
+    public function index(Book $book, Request $request)
     {
         if (auth()->user()->hasPermissionTo('book:viewAny')) {
-            return $this->response(BookResource::collection(Book::all()));
+//            return $this->response(BookResource::collection(Book::all()));
+            $query = Book::with('category');
+            if($request->filled('name'))
+            {
+                $name = $request->get('name');
+            $query->where('name','like',"%$name%");
+            }
+            if($request->filled('author'))
+            {
+                $author = $request->get('author');
+            $query->where('author','like',"%$author%");
+            }
+            if($request->filled('created_at_book'))
+            {
+            $query->where('created_at_book',$request->get('created_at_book'));
+            }
+            if($request->filled('created_at_book'))
+            {
+                $query->whereHas('category',function ($query_category){
+                    $query_category->where('category',request()->get('category'));
+                });
+            }
+            $books = $query->get();
+            return $this->response(BookResource::collection($books));
         }
     }
 

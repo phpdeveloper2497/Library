@@ -22,7 +22,7 @@ class BookFactory extends Factory
 
             "category_id" => rand(1, 6),
             "quantity" => rand(1,20),
-            "created_at_book" =>$this->faker->unique()->dateTimeBetween($startDate = '-50 years', $endDate = 'now', $timezone = null) ,
+            "created_at_book" =>$this->faker->dateTimeBetween($startDate = '-50 years', $endDate = 'now', $timezone = null)->format('Y') ,
             "name" => [
                 "en" => fake()->sentence(3),
                 "ru" => "Постройте жизнь, которую хотите: искусство и наука стать счастливее",
