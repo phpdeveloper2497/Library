@@ -41,11 +41,12 @@ class BookController extends Controller
             {
             $query->where('created_at_book',$request->get('created_at_book'));
             }
-            if($request->filled('created_at_book'))
+            if($request->filled('category'))
             {
                 $query->whereHas('category',function ($query_category){
-                    $query_category->where('category',request()->get('category'));
+                    $query_category->where('name','like','%'.request()->get('category').'%');
                 });
+
             }
             $books = $query->get();
             return $this->response(BookResource::collection($books));
