@@ -25,37 +25,39 @@ class BookController extends Controller
     public function index(Book $book, Request $request)
     {
         if (auth()->user()->hasPermissionTo('book:viewAny')) {
-//            return $this->response(BookResource::collection(Book::all()));
             $query = Book::with('category');
-            if($request->filled('name'))
-            {
+            if ($request->filled('name')) {
                 $name = $request->get('name');
-            $query->where('name','like',"%$name%");
+                $query->where('name', 'like', "%$name%");
             }
-            if($request->filled('author'))
-            {
+            if ($request->filled('author')) {
                 $author = $request->get('author');
-            $query->where('author','like',"%$author%");
+                $query->where('author', 'like', "%$author%");
             }
-            if($request->filled('created_at_book'))
-            {
-            $query->where('created_at_book',$request->get('created_at_book'));
+            if ($request->filled('created_at_book')) {
+                $query->where('created_at_book', $request->get('created_at_book'));
             }
-            if($request->filled('category'))
-            {
-                $query->whereHas('category',function ($query_category){
-                    $query_category->where('name','like','%'.request()->get('category').'%');
+            if ($request->filled('category')) {
+                $query->whereHas('category', function ($query_category) {
+                    $query_category->where('name', 'like', '%' . request()->get('category') . '%');
                 });
-
             }
-            $books = $query->get();
+            if ($request->sortBy && in_array($request->sortBy, ['id', 'created_at'])) {
+                $sortBy = $request->sortBy;
+            } else {
+                $sortBy = 'id';
+            }
+            if ($request->sortOrderBy && in_array($request->sortOrderBy, ['asc', 'desc'])) {
+                $sortOrderBy = $request->sortOrderBy;
+            } else {
+                $sortOrderBy = 'desc';
+            }
+            $books = $query->OrderBy($sortBy, $sortOrderBy)->get();
             return $this->response(BookResource::collection($books));
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(StoreBookRequest $request)
     {
         if (auth()->user()->hasPermissionTo('book:create')) {
@@ -81,9 +83,7 @@ class BookController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Book $book)
     {
         if (auth()->user()->hasPermissionTo('book:view')) {
@@ -125,8 +125,6 @@ class BookController extends Controller
     {
         if (auth()->user()->hasPermissionTo('book:update')) {
 
-//            dd($book->photo->path);
-//            dd($request->file('photo'));
             if ($request->file('photo') !== '' && $request->file('photo') !== null) {
                 $directory = $book->photo->path;
                 Storage::disk('public')->delete($directory);
