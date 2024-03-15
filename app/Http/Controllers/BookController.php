@@ -10,6 +10,7 @@ use App\Http\Resources\BookResource;
 use App\Models\Book;
 use App\Models\Photo;
 use App\Notifications\Book\CreatedNotification;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -37,9 +38,9 @@ class BookController extends Controller
             if ($request->filled('created_at_book')) {
                 $query->where('created_at_book', $request->get('created_at_book'));
             }
-            if ($request->filled('category')) {
-                $query->whereHas('category', function ($query_category) {
-                    $query_category->where('name', 'like', '%' . request()->get('category') . '%');
+            if ($request->filled('category_id')) {
+               $query->whereHas('category', function (Builder $query_category) use ($request) {
+                   $query_category->whereIn('id', explode(',', $request->get('category_id')));
                 });
             }
             if ($request->sortBy && in_array($request->sortBy, ['id', 'created_at'])) {
@@ -52,7 +53,7 @@ class BookController extends Controller
             } else {
                 $sortOrderBy = 'desc';
             }
-            $books = $query->OrderBy($sortBy, $sortOrderBy)->get();
+            $books = $query->orderBy($sortBy, $sortOrderBy)->get();
             return $this->response(BookResource::collection($books));
         }
     }
