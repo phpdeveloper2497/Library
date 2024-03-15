@@ -53,7 +53,7 @@ class BookController extends Controller
             } else {
                 $sortOrderBy = 'desc';
             }
-            $books = $query->orderBy($sortBy, $sortOrderBy)->get();
+            $books = $query->orderBy($sortBy, $sortOrderBy)->paginate(12);
             return $this->response(BookResource::collection($books));
         }
     }
