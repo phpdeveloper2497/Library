@@ -29,7 +29,7 @@ class ClientController extends Controller
 
     public function index()
     {
-        $client = Client::paginate(30);
+        $client = Client::query()->paginate(30);
         return $this->response(ClientResource::collection($client));
     }
 

@@ -21,7 +21,7 @@ class BookingResource extends JsonResource
             'booking_id' => $this->id,
             'user_id' => $this->user['id'],
             'status_id' => $this->status_id,
-            'book' => new BookBokingResource($this->whenLoaded('book')),
+//            'book' => new BookBokingResource($this->whenLoaded('book')),
             'client_id' => $this->client->id,
         ];
     }
