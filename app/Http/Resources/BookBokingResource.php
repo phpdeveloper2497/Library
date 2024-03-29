@@ -15,7 +15,6 @@ class BookBokingResource extends JsonResource
     public function toArray(Request $request): array
     {
         return[
-            'client' => new ClientResource($this->client),
             "booking_id" =>$this->id,
             "booking_created" =>$this->created_at,
             "booking_to" =>$this->to,
@@ -23,6 +22,7 @@ class BookBokingResource extends JsonResource
             'book_name' => $this->book->getTranslations('name'),
             'book_author' => $this->book->getTranslations('author'),
             'created_at_book' => $this->book->created_at_book,
+            'client' => new ClientResource($this->client),
         ];
     }
 }

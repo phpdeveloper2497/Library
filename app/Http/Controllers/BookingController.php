@@ -85,7 +85,6 @@ class BookingController extends Controller
     public function booksReturnedToday()
     {
         $data_should = Booking::whereDate('to', Carbon::today())->get();
-//        dd($data_should);
-        return $this->response(BokingReturnTodayResource::collection($data_should));
+        return $this->response(BookBokingResource::collection($data_should));
     }
 }
